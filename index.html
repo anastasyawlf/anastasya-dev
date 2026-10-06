@@ -1,565 +1,862 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Najya Anastasya - Personal Portfolio</title>
-    <meta name="description" content="Portfolio of Najya Anastasya - Mobile & Software Engineer (Flutter, Go, Web)">
-    <meta name="keywords" content="Najya Anastasya, Software Engineer, Mobile Developer, Flutter, Golang, Portfolio, Jakarta">
-    
-    <!-- Google Fonts -->
+    <title>Najya Anastasya — Mobile & Software Engineer</title>
+    <meta name="description"
+        content="Portfolio of Najya Anastasya — Mobile & Software Engineer specializing in Flutter, Go, and Web.">
+    <meta name="keywords" content="Najya Anastasya, Software Engineer, Mobile Developer, Flutter, Golang, Jakarta">
+
+    <!-- Google Fonts: Inter + Fira Code -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <!-- Tailwind CSS CDN -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
                         mono: ['"Fira Code"', 'monospace'],
                     },
                     colors: {
-                        emerald: {
-                            400: '#34d399',
-                            500: '#10b981',
-                            600: '#059669',
-                        },
-                        teal: {
-                            400: '#2dd4bf',
-                            500: '#14b8a6',
+                        zinc: {
+                            950: '#09090b',
+                            900: '#18181b',
+                            800: '#27272a',
+                            700: '#3f3f46',
+                            400: '#a1a1aa',
+                            100: '#f4f4f5',
                         }
                     }
                 }
             }
         }
     </script>
+
     <style>
+        /* ── Base ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            background: #09090b;
+        }
+
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #09090b;
+            color: #e4e4e7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        .glass-nav {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        .glass-card {
-            background: rgba(30, 41, 59, 0.6);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(51, 65, 85, 0.5);
-        }
-        
-        /* Interactive Spotlight & Lift Hover Effects */
-        .spotlight-card {
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .spotlight-card::before {
+
+        /* ── Subtle dot-matrix background ── */
+        body::before {
             content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(45, 212, 191, 0.15), transparent 60%);
-            border-radius: inherit;
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-        .spotlight-card:hover::before {
-            opacity: 1;
-        }
-        .spotlight-card > * {
-            position: relative;
-            z-index: 1;
-        }
-        .spotlight-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(45, 212, 191, 0.45);
-            box-shadow: 0 14px 35px -10px rgba(45, 212, 191, 0.18);
-        }
-
-        .text-gradient {
-            background: linear-gradient(135deg, #2dd4bf 0%, #34d399 50%, #38bdf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .bg-grid-pattern {
-            background-image: radial-gradient(rgba(45, 212, 191, 0.1) 1px, transparent 1px);
-            background-size: 32px 32px;
-        }
-
-        /* Mouse Cursor Background Spotlight Orb */
-        #cursor-spotlight {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 550px;
-            height: 550px;
-            margin-left: -275px;
-            margin-top: -275px;
-            background: radial-gradient(circle, rgba(45, 212, 191, 0.12) 0%, rgba(16, 185, 129, 0.04) 45%, transparent 70%);
+            inset: 0;
+            background-image: radial-gradient(circle, #3f3f46 1px, transparent 1px);
+            background-size: 28px 28px;
+            opacity: 0.18;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Cursor spotlight ── */
+        #cursor-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            margin-left: -300px;
+            margin-top: -300px;
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.07) 0%, transparent 65%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 1;
             opacity: 0;
-            transition: opacity 0.4s ease;
             will-change: transform;
+            transition: opacity 0.5s ease;
         }
 
-        /* Scroll Reveal Animation Styles */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
+        /* ── Nav ── */
+        .site-nav {
+            background: rgba(9, 9, 11, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid #27272a;
         }
-        .reveal-on-scroll.is-visible {
+
+        /* ── Ghost cards ── */
+        .ghost-card {
+            background: transparent;
+            border: 1px solid #27272a;
+            transition: border-color 0.28s ease, background 0.28s ease, transform 0.28s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .ghost-card:hover {
+            border-color: rgba(52, 211, 153, 0.35);
+            background: rgba(52, 211, 153, 0.04);
+            transform: translateY(-3px);
+        }
+
+        /* ── Timeline ── */
+        .timeline-line {
+            border-left: 1px dashed #3f3f46;
+        }
+
+        .timeline-dot {
+            width: 7px;
+            height: 7px;
+            background: #34d399;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 6px;
+            transition: box-shadow 0.25s ease, transform 0.25s ease;
+        }
+
+        /* ── Timeline entry hover ── */
+        .timeline-entry {
+            transition: padding-left 0.25s ease;
+        }
+
+        .timeline-entry:hover .timeline-dot {
+            box-shadow: 0 0 0 5px rgba(52, 211, 153, 0.28);
+            transform: scale(1.5);
+        }
+
+        .timeline-entry:hover h3 {
+            color: #f4f4f5;
+        }
+
+        .timeline-entry:hover .entry-meta {
+            color: #71717a;
+        }
+
+        /* ── Code widget ── */
+        .code-widget {
+            background: #111113;
+            border: 1px solid #27272a;
+            border-radius: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.78rem;
+            line-height: 1.7;
+        }
+
+        .code-widget .bar {
+            background: #1c1c1f;
+            border-bottom: 1px solid #27272a;
+            border-radius: 10px 10px 0 0;
+            padding: 9px 14px;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .code-widget .bar span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .code-widget .bar .dot-red {
+            background: #ff5f57;
+        }
+
+        .code-widget .bar .dot-yellow {
+            background: #ffbd2e;
+        }
+
+        .code-widget .bar .dot-green {
+            background: #27c840;
+        }
+
+        .code-widget .code-body {
+            padding: 18px 20px;
+        }
+
+        .tok-keyword {
+            color: #c678dd;
+        }
+
+        .tok-var {
+            color: #e5c07b;
+        }
+
+        .tok-str {
+            color: #98c379;
+        }
+
+        .tok-fn {
+            color: #61afef;
+        }
+
+        .tok-comment {
+            color: #5c6370;
+        }
+
+        .tok-num {
+            color: #d19a66;
+        }
+
+        .tok-punct {
+            color: #abb2bf;
+        }
+
+        /* ── Skill pills ── */
+        .skill-pill {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.72rem;
+            padding: 4px 12px;
+            border: 1px solid #3f3f46;
+            border-radius: 4px;
+            color: #a1a1aa;
+            background: transparent;
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+            display: inline-block;
+            cursor: default;
+        }
+
+        .skill-pill:hover {
+            border-color: #34d399;
+            color: #34d399;
+            background: rgba(52, 211, 153, 0.12);
+        }
+
+        /* ── Outline buttons ── */
+        .btn-outline {
+            border: 1px solid #3f3f46;
+            color: #e4e4e7;
+            background: transparent;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-outline:hover {
+            border-color: #34d399;
+            color: #34d399;
+        }
+
+        .btn-solid {
+            border: 1px solid #34d399;
+            color: #09090b;
+            background: #34d399;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-solid:hover {
+            background: transparent;
+            color: #34d399;
+        }
+
+        /* ── Scroll reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
+        /* ── Contact link underline slide ── */
+        .contact-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-link .link-text {
+            position: relative;
+        }
+
+        .contact-link .link-text::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #34d399;
+            transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .contact-link:hover .link-text::after {
+            width: 100%;
+        }
+
+        .contact-link:hover .link-icon {
+            color: #34d399;
+        }
+
+        .link-icon {
+            color: #52525b;
+            width: 14px;
+            font-size: 0.8rem;
+            transition: color 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        /* ── Available badge ping ── */
+        @keyframes ping-ring {
+
+            75%,
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .ping-ring {
+            animation: ping-ring 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        /* ── Section label ── */
+        .section-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: #34d399;
+            text-transform: uppercase;
+        }
+
+        /* ── Divider ── */
+        .divider {
+            border: none;
+            border-top: 1px solid #27272a;
+        }
+
+        /* ── Scrollbar ── */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 5px;
         }
+
         ::-webkit-scrollbar-track {
-            background: #0f172a;
+            background: #09090b;
         }
+
         ::-webkit-scrollbar-thumb {
-            background: #334155;
+            background: #3f3f46;
             border-radius: 4px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
-            background: #2dd4bf;
+            background: #34d399;
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen selection:bg-teal-500 selection:text-slate-900 relative overflow-x-hidden">
 
-    <!-- Background Grid Accent & Orbs -->
-    <div class="fixed inset-0 bg-grid-pattern pointer-events-none opacity-40 z-0"></div>
-    <div class="fixed top-0 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full filter blur-3xl pointer-events-none"></div>
-    <div class="fixed bottom-10 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full filter blur-3xl pointer-events-none"></div>
+<body class="relative min-h-screen">
 
-    <!-- Navigation Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-slate-800 transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Brand Logo -->
-                <a href="#hero" class="flex items-center space-x-3 group">
-                    <span class="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-400 to-emerald-500 flex items-center justify-center font-extrabold text-slate-950 text-lg shadow-lg shadow-teal-500/20 group-hover:scale-105 transition-transform">NA</span>
-                    <div class="flex flex-col">
-                        <span class="font-bold text-slate-100 text-lg leading-tight tracking-tight group-hover:text-teal-400 transition-colors">Najya Anastasya</span>
-                        <span class="text-xs text-slate-400 font-mono">Mobile & Software Engineer</span>
-                    </div>
-                </a>
+    <!-- Cursor spotlight -->
+    <div id="cursor-glow"></div>
 
-                <!-- Desktop Nav -->
-                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                    <a href="#about" class="text-slate-300 hover:text-teal-400 transition-colors py-1">About Me</a>
-                    <a href="#experience" class="text-slate-300 hover:text-teal-400 transition-colors py-1">Experience</a>
-                    <a href="#projects" class="text-slate-300 hover:text-teal-400 transition-colors py-1">Projects & Highlights</a>
-                    <a href="#skills" class="text-slate-300 hover:text-teal-400 transition-colors py-1">Skills</a>
-                    <a href="#contact" class="px-4 py-2 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 hover:bg-teal-500 hover:text-slate-950 transition-all duration-300 font-semibold shadow-sm">
-                        Contact Me
-                    </a>
-                </nav>
-
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" aria-label="Toggle Navigation Menu" class="md:hidden text-slate-300 hover:text-teal-400 focus:outline-none p-2">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-            </div>
+    <!-- ─────────────────────── NAV ─────────────────────── -->
+    <header class="site-nav fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#hero" class="font-mono text-sm text-zinc-400 hover:text-zinc-100 transition-colors tracking-wide">
+                <span class="text-emerald-400">~/</span>najya
+            </a>
+            <nav class="hidden md:flex items-center gap-8 text-sm text-zinc-400">
+                <a href="#about" class="hover:text-zinc-100 transition-colors">About</a>
+                <a href="#experience" class="hover:text-zinc-100 transition-colors">Experience</a>
+                <a href="#projects" class="hover:text-zinc-100 transition-colors">Projects</a>
+                <a href="#skills" class="hover:text-zinc-100 transition-colors">Skills</a>
+                <a href="#contact" class="btn-solid py-1.5 px-4 text-xs">Contact</a>
+            </nav>
+            <button id="mob-btn" class="md:hidden text-zinc-400 hover:text-zinc-100 focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </div>
-
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3 font-medium">
-            <a href="#about" class="block py-2 text-slate-300 hover:text-teal-400 transition-colors">About Me</a>
-            <a href="#experience" class="block py-2 text-slate-300 hover:text-teal-400 transition-colors">Experience</a>
-            <a href="#projects" class="block py-2 text-slate-300 hover:text-teal-400 transition-colors">Projects & Highlights</a>
-            <a href="#skills" class="block py-2 text-slate-300 hover:text-teal-400 transition-colors">Skills</a>
-            <a href="#contact" class="block text-center py-2.5 rounded-xl bg-teal-500 text-slate-950 font-semibold">Contact Me</a>
+        <div id="mob-menu"
+            class="hidden md:hidden border-t border-zinc-800 bg-zinc-950/95 px-6 py-4 space-y-3 text-sm text-zinc-400">
+            <a href="#about" class="block hover:text-zinc-100">About</a>
+            <a href="#experience" class="block hover:text-zinc-100">Experience</a>
+            <a href="#projects" class="block hover:text-zinc-100">Projects</a>
+            <a href="#skills" class="block hover:text-zinc-100">Skills</a>
+            <a href="#contact" class="block hover:text-zinc-100">Contact</a>
         </div>
     </header>
 
-    <main class="relative z-10 pt-20">
+    <main class="relative z-10 pt-16">
 
-        <!-- 1. HERO SECTION -->
-        <section id="hero" class="min-h-[calc(100vh-5rem)] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-5xl mx-auto w-full text-center sm:text-left">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-                    
-                    <div class="lg:col-span-8 space-y-6">
-                        <!-- Headline Sub-badge -->
-                        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-slate-800/90 border border-teal-500/30 text-teal-400 text-xs sm:text-sm font-medium">
-                            <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
-                            <span>Mobile & Software Engineer (Flutter, Go, Web)</span>
-                        </div>
+        <!-- ─────────────────────── HERO ─────────────────────── -->
+        <section id="hero" class="min-h-[100svh] flex items-center px-6 py-24">
+            <div class="max-w-5xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-                        <!-- Name -->
-                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight">
-                            Najya Anastasya
+                <!-- Left: Typography -->
+                <div class="space-y-7">
+                    <!-- Available badge -->
+                    <div
+                        class="inline-flex items-center gap-2.5 font-mono text-xs text-zinc-400 tracking-widest uppercase">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span
+                                class="ping-ring absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60"></span>
+                            <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+                        </span>
+                        Available for opportunities
+                    </div>
+
+                    <!-- Name -->
+                    <div class="space-y-1">
+                        <h1 class="text-5xl sm:text-6xl font-black tracking-tight text-zinc-100 leading-[1.05]">
+                            Najya<br>Anastasya
                         </h1>
-
-                        <!-- Location & Email -->
-                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-slate-300 text-sm sm:text-base font-mono">
-                            <span class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-teal-400"></i> Jakarta, Indonesia</span>
-                            <span class="hidden sm:inline text-slate-600">•</span>
-                            <a href="mailto:najya.anastasya275@gmail.com" class="flex items-center gap-2 hover:text-teal-400 transition-colors">
-                                <i class="fa-solid fa-envelope text-emerald-400"></i> najya.anastasya275@gmail.com
-                            </a>
-                        </div>
-
-                        <!-- Highlight Badges -->
-                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-2">
-                            <span class="px-3.5 py-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 text-xs sm:text-sm font-medium flex items-center gap-2">
-                                <i class="fa-solid fa-award text-teal-400"></i> Patent Holder (AR-NAVIS)
-                            </span>
-                            <span class="px-3.5 py-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 text-xs sm:text-sm font-medium flex items-center gap-2">
-                                <i class="fa-solid fa-graduation-cap text-emerald-400"></i> UNS Electrical Engineering (GPA: 3.81)
-                            </span>
-                        </div>
-
-                        <!-- CTA Buttons -->
-                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-4 pt-4">
-                            <a href="#contact" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-teal-400 to-emerald-500 text-slate-950 font-bold hover:shadow-lg hover:shadow-teal-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
-                                <span>Contact Me</span>
-                                <i class="fa-solid fa-paper-plane text-sm"></i>
-                            </a>
-                            <a href="https://docs.google.com/document/d/1v8oXd33_KbnKh-gjGDiKmLcuTm9C77_AqnPRsGBj3SY/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700/80 text-slate-200 border border-slate-700 font-semibold hover:border-teal-500/40 transition-all flex items-center gap-2">
-                                <span>View CV</span>
-                                <i class="fa-solid fa-arrow-up-right-from-square text-sm text-teal-400"></i>
-                            </a>
-                        </div>
-
-                        <!-- Links: LinkedIn & GitHub -->
-                        <div class="flex items-center justify-center sm:justify-start space-x-6 pt-4 text-slate-400">
-                            <a href="https://www.linkedin.com/in/najya-anastasya/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-teal-400 transition-colors text-sm font-medium">
-                                <i class="fa-brands fa-linkedin text-xl text-teal-400"></i>
-                                <span>LinkedIn</span>
-                            </a>
-                            <a href="https://github.com/anastasyawlf" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-teal-400 transition-colors text-sm font-medium">
-                                <i class="fa-brands fa-github text-xl text-emerald-400"></i>
-                                <span>GitHub</span>
-                            </a>
-                        </div>
+                        <p class="text-zinc-400 text-lg font-light mt-4 leading-snug">
+                            Mobile &amp; Software Engineer<br>
+                            <span class="font-mono text-sm text-zinc-500">Flutter · Go · Web</span>
+                        </p>
                     </div>
 
-                    <!-- Right Quick Info Card -->
-                    <div class="lg:col-span-4">
-                        <div class="glass-card spotlight-card rounded-2xl p-6 space-y-4 text-left">
-                            <div class="flex items-center justify-between border-b border-slate-700/60 pb-3">
-                                <span class="text-xs font-mono text-teal-400 uppercase tracking-wider font-semibold">Current Focus</span>
-                                <i class="fa-solid fa-code text-slate-500"></i>
-                            </div>
-
-                            <div class="space-y-3">
-                                <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800">
-                                    <span class="text-xs font-mono text-emerald-400">Mobile Banking</span>
-                                    <h4 class="text-sm font-bold text-slate-100 mt-0.5">Flutter & Clean Architecture</h4>
-                                    <p class="text-xs text-slate-400 mt-1">High-volume transactions & secure enterprise APIs.</p>
-                                </div>
-                                <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800">
-                                    <span class="text-xs font-mono text-teal-400">Backend & Microservices</span>
-                                    <h4 class="text-sm font-bold text-slate-100 mt-0.5">Golang & Laravel</h4>
-                                    <p class="text-xs text-slate-400 mt-1">RESTful APIs, PostgreSQL, MySQL & Cloud Systems.</p>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Info -->
+                    <div class="flex flex-wrap gap-4 text-xs font-mono text-zinc-500">
+                        <span><i class="fa-solid fa-location-dot mr-1.5 text-emerald-400/70"></i>Jakarta, Indonesia</span>
+                        <span><i class="fa-solid fa-graduation-cap mr-1.5 text-emerald-400/70"></i>UNS EE · GPA 3.81</span>
                     </div>
 
+                    <!-- CTAs -->
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <a href="#contact" class="btn-solid">
+                            Contact Me <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                        <a href="https://docs.google.com/document/d/1v8oXd33_KbnKh-gjGDiKmLcuTm9C77_AqnPRsGBj3SY/edit?usp=sharing"
+                            target="_blank" rel="noopener noreferrer" class="btn-outline">
+                            View CV <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Social links -->
+                    <div class="flex gap-5 text-zinc-500 pt-1">
+                        <a href="https://github.com/anastasyawlf" target="_blank" rel="noopener noreferrer"
+                            class="hover:text-zinc-100 transition-colors text-lg" title="GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/najya-anastasya/" target="_blank" rel="noopener noreferrer"
+                            class="hover:text-zinc-100 transition-colors text-lg" title="LinkedIn">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a href="mailto:najya.anastasya275@gmail.com"
+                            class="hover:text-zinc-100 transition-colors text-lg" title="Email">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                    </div>
                 </div>
+
+                <!-- Right: Code widget + Stats -->
+                <div class="space-y-4">
+                    <!-- Code Sandbox -->
+                    <div class="code-widget">
+                        <div class="bar">
+                            <span class="dot-red"></span>
+                            <span class="dot-yellow"></span>
+                            <span class="dot-green"></span>
+                            <span class="ml-3 text-zinc-600 text-xs">najya.ts</span>
+                        </div>
+                        <div class="code-body space-y-0.5 text-zinc-300 select-none">
+                            <div><span class="tok-keyword">const</span> <span class="tok-var">Najya</span> <span
+                                    class="tok-punct">= {</span></div>
+                            <div>&nbsp;&nbsp;<span class="tok-fn">role</span><span class="tok-punct">:</span> <span
+                                    class="tok-str">"Mobile & Backend Engineer"</span><span class="tok-punct">,</span>
+                            </div>
+                            <div>&nbsp;&nbsp;<span class="tok-fn">stack</span><span class="tok-punct">:</span> <span
+                                    class="tok-punct">[</span><span class="tok-str">"Flutter"</span><span
+                                    class="tok-punct">,</span> <span class="tok-str">"Go"</span><span
+                                    class="tok-punct">,</span> <span class="tok-str">"Laravel"</span><span
+                                    class="tok-punct">],</span></div>
+                            <div>&nbsp;&nbsp;<span class="tok-fn">architecture</span><span class="tok-punct">:</span>
+                                <span class="tok-str">"Clean Architecture"</span><span class="tok-punct">,</span></div>
+                            <div>&nbsp;&nbsp;<span class="tok-fn">cloud</span><span class="tok-punct">:</span> <span
+                                    class="tok-str">"Google Cloud Platform"</span><span class="tok-punct">,</span></div>
+                            <div>&nbsp;&nbsp;<span class="tok-fn">patent</span><span class="tok-punct">:</span> <span
+                                    class="tok-str">"AR-NAVIS"</span> <span class="tok-comment">// EC002023129061</span>
+                            </div>
+                            <div><span class="tok-punct">};</span></div>
+                            <div class="mt-2"><span class="tok-comment">// Currently building mobile banking at
+                                    BNI</span></div>
+                            <div><span class="tok-comment">// via Flutter · Apr 2026 – Present</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Stats row -->
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="ghost-card rounded-lg p-4 text-center">
+                            <div class="text-2xl font-black text-zinc-100 font-mono">2+</div>
+                            <div class="text-[11px] text-zinc-500 mt-0.5 font-mono">yrs exp</div>
+                        </div>
+                        <div class="ghost-card rounded-lg p-4 text-center">
+                            <div class="text-2xl font-black text-emerald-400 font-mono">3.81</div>
+                            <div class="text-[11px] text-zinc-500 mt-0.5 font-mono">GPA / 4.00</div>
+                        </div>
+                        <div class="ghost-card rounded-lg p-4 text-center">
+                            <div class="text-2xl font-black text-zinc-100 font-mono">100%</div>
+                            <div class="text-[11px] text-zinc-500 mt-0.5 font-mono">pass rate</div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
+        <hr class="divider max-w-5xl mx-auto">
 
-        <!-- 2. ABOUT ME SECTION -->
-        <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800/80">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center sm:text-left space-y-2 mb-8">
-                    <span class="text-teal-400 font-mono text-sm tracking-wider uppercase font-semibold">// Profile</span>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-100">About Me</h2>
-                    <div class="w-16 h-1 bg-gradient-to-r from-teal-400 to-emerald-500 rounded-full mx-auto sm:mx-0"></div>
+        <!-- ─────────────────────── ABOUT ─────────────────────── -->
+        <section id="about" class="py-24 px-6 reveal">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-3">
+                    <p class="section-label sticky top-24">About</p>
                 </div>
-
-                <div class="glass-card spotlight-card rounded-2xl p-6 sm:p-8 space-y-4 text-slate-200 text-lg leading-relaxed">
+                <div class="lg:col-span-9 space-y-5 text-zinc-400 text-[15px] leading-relaxed">
                     <p>
-                        I am a Software Engineer specializing in Mobile development with Flutter as well as Web & Backend systems built with Go (Golang) and PHP (Laravel).
+                        I'm a Software Engineer focused on high-performance
+                        <span class="text-zinc-200">Mobile development with Flutter</span> and
+                        scalable <span class="text-zinc-200">Web & Backend systems in Go and Laravel</span>.
                     </p>
                     <p>
-                        Holding a Bachelor's degree in Electrical Engineering from UNS with a 3.81 GPA, I have extensive experience architecting high-performance applications, Clean Architecture, and Cloud infrastructure.
+                        Graduated in Electrical Engineering (ICT) from Universitas Sebelas Maret (GPA 3.81), I've
+                        designed production apps from the ground up — from banking platforms handling high-volume
+                        transactions to full HRIS systems integrated with Odoo ERP.
+                    </p>
+                    <p>
+                        I care about <span class="text-zinc-200">clean architecture, readable code, and systems that
+                            scale</span>. Outside engineering work, I hold a registered patent for AR-NAVIS, an
+                        Augmented Reality indoor navigation tool designed for accessibility.
                     </p>
                 </div>
             </div>
         </section>
 
+        <hr class="divider max-w-5xl mx-auto">
 
-        <!-- 3. EXPERIENCE SECTION -->
-        <section id="experience" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800/80 bg-slate-900/40">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center sm:text-left space-y-2 mb-12">
-                    <span class="text-teal-400 font-mono text-sm tracking-wider uppercase font-semibold">// Career</span>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-100">Experience</h2>
-                    <div class="w-16 h-1 bg-gradient-to-r from-teal-400 to-emerald-500 rounded-full mx-auto sm:mx-0"></div>
+        <!-- ─────────────────────── EXPERIENCE ─────────────────────── -->
+        <section id="experience" class="py-24 px-6">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-3">
+                    <p class="section-label sticky top-24">Experience</p>
                 </div>
+                <div class="lg:col-span-9">
+                    <div class="timeline-line pl-6 space-y-12 ml-1">
 
-                <div class="space-y-6">
-
-                    <!-- Exp 1 -->
-                    <div class="glass-card spotlight-card rounded-2xl p-6 sm:p-8 space-y-4 border-l-4 border-l-teal-400">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-700/60 pb-4">
-                            <div>
-                                <h3 class="text-xl sm:text-2xl font-bold text-slate-100">Mobile Developer</h3>
-                                <p class="text-teal-400 font-medium">PT Bank Negara Indonesia (Persero) Tbk <span class="text-slate-400 text-sm font-normal">(via Adidata)</span></p>
+                        <!-- Entry 1 -->
+                        <div class="relative reveal timeline-entry">
+                            <div class="timeline-dot absolute -left-[27px]"></div>
+                            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-3">
+                                <div>
+                                    <h3 class="text-zinc-100 font-semibold text-base">Mobile Developer</h3>
+                                    <p class="text-zinc-400 text-sm">PT Bank Negara Indonesia (via Adidata)</p>
+                                </div>
+                                <span class="font-mono text-xs text-zinc-500 whitespace-nowrap">Apr 2026 –
+                                    Present</span>
                             </div>
-                            <div class="text-left sm:text-right text-xs font-mono text-teal-400 font-semibold">
-                                <i class="fa-regular fa-calendar mr-1"></i> Apr 2026 – Present
+                            <ul class="space-y-2 text-zinc-400 text-sm leading-relaxed">
+                                <li class="flex gap-2.5"><span class="text-zinc-600 mt-1">—</span><span>Develop and
+                                        maintain mobile banking features with Flutter for high-volume transactions and
+                                        secure customer services.</span></li>
+                                <li class="flex gap-2.5"><span class="text-zinc-600 mt-1">—</span><span>Integrate apps
+                                        with enterprise banking APIs under strict security and code quality
+                                        standards.</span></li>
+                                <li class="flex gap-2.5"><span class="text-zinc-600 mt-1">—</span><span>Collaborate in
+                                        Agile squads with Product Owners, QA, and Backend Engineers for production
+                                        releases.</span></li>
+                            </ul>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="skill-pill">Flutter</span>
+                                <span class="skill-pill">Banking APIs</span>
+                                <span class="skill-pill">Agile</span>
                             </div>
                         </div>
 
-                        <ul class="space-y-2.5 text-slate-300 text-sm sm:text-base leading-relaxed">
-                            <li class="flex items-start gap-3">
-                                <i class="fa-solid fa-angle-right text-teal-400 mt-1.5 text-xs"></i>
-                                <span>Develop and maintain mobile banking features using Flutter for high-volume transactions and secure customer services.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i class="fa-solid fa-angle-right text-teal-400 mt-1.5 text-xs"></i>
-                                <span>Integrate mobile apps with enterprise banking APIs adhering to security standards.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i class="fa-solid fa-angle-right text-teal-400 mt-1.5 text-xs"></i>
-                                <span>Collaborate in Agile squads with Product Owners, QA, and Backend Engineers for production releases.</span>
-                            </li>
-                        </ul>
+                        <!-- Entry 2 -->
+                        <div class="relative reveal timeline-entry">
+                            <div class="timeline-dot absolute -left-[27px]"></div>
+                            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-3">
+                                <div>
+                                    <h3 class="text-zinc-100 font-semibold text-base">Software Engineer</h3>
+                                    <p class="text-zinc-400 text-sm">Akuntplus / Accounting & IT Solution Firm</p>
+                                </div>
+                                <span class="font-mono text-xs text-zinc-500 whitespace-nowrap">Aug 2025 – May
+                                    2026</span>
+                            </div>
+                            <ul class="space-y-2 text-zinc-400 text-sm leading-relaxed">
+                                <li class="flex gap-2.5"><span class="text-zinc-600 mt-1">—</span><span>Architected and
+                                        built an HR Management System from scratch using Flutter + Golang, integrated
+                                        with Odoo ERP for automated attendance and payroll.</span></li>
+                                <li class="flex gap-2.5"><span class="text-zinc-600 mt-1">—</span><span>Primary Mobile
+                                        Developer for high-traffic apps: AdolPOS (Android) and AdolESS (iOS/Android)
+                                        using Clean Architecture.</span></li>
+                                <li class="flex gap-2.5"><span class="text-zinc-600 mt-1">—</span><span>Engineered a
+                                        Web-based Vendor Portal with Laravel & RESTful APIs to streamline procurement
+                                        workflows.</span></li>
+                                <li class="flex gap-2.5"><span class="text-zinc-600 mt-1">—</span><span>Backend
+                                        optimization (Go) for CICO Maps and Face Recognition; handled production support
+                                        and bug-fixing.</span></li>
+                            </ul>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="skill-pill">Flutter</span>
+                                <span class="skill-pill">Golang</span>
+                                <span class="skill-pill">Laravel</span>
+                                <span class="skill-pill">Clean Architecture</span>
+                                <span class="skill-pill">Odoo ERP</span>
+                            </div>
+                        </div>
+
+                        <!-- Entry 3 -->
+                        <div class="relative reveal timeline-entry">
+                            <div class="timeline-dot absolute -left-[27px]" style="background:#2dd4bf"></div>
+                            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-3">
+                                <div>
+                                    <h3 class="text-zinc-100 font-semibold text-base">Programming Lead</h3>
+                                    <p class="text-zinc-400 text-sm">Baskara Renewable Energy UNS</p>
+                                </div>
+                                <span class="font-mono text-xs text-zinc-500 whitespace-nowrap">Mar 2023 – Jul
+                                    2023</span>
+                            </div>
+                            <ul class="space-y-2 text-zinc-400 text-sm leading-relaxed">
+                                <li class="flex gap-2.5"><span class="text-zinc-600 mt-1">—</span><span>Led real-time
+                                        IoT System for smart-bike tracking integrating hardware sensors with MySQL,
+                                        Google Maps API, and Plotly.js visualization at 98% data accuracy.</span></li>
+                            </ul>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="skill-pill">IoT</span>
+                                <span class="skill-pill">MySQL</span>
+                                <span class="skill-pill">Plotly.js</span>
+                            </div>
+                        </div>
+
+                        <!-- Entry 4 -->
+                        <div class="relative reveal timeline-entry">
+                            <div class="timeline-dot absolute -left-[27px]" style="background:#6366f1"></div>
+                            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-3">
+                                <div>
+                                    <h3 class="text-zinc-100 font-semibold text-base">Web Developer Intern</h3>
+                                    <p class="text-zinc-400 text-sm">PT Solusi Bangun Indonesia Tbk (SBI)</p>
+                                </div>
+                                <span class="font-mono text-xs text-zinc-500 whitespace-nowrap">Jan 2023 – Mar
+                                    2023</span>
+                            </div>
+                            <ul class="space-y-2 text-zinc-400 text-sm leading-relaxed">
+                                <li class="flex gap-2.5"><span class="text-zinc-600 mt-1">—</span><span>Built a
+                                        centralized CCTV monitoring platform with PHP / HTML5 integrating RTSP for
+                                        low-latency live feeds across plant sectors. Reduced system bugs by 30%.</span>
+                                </li>
+                            </ul>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="skill-pill">PHP</span>
+                                <span class="skill-pill">RTSP</span>
+                                <span class="skill-pill">HTML5/CSS3</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider max-w-5xl mx-auto">
+
+        <!-- ─────────────────────── PROJECTS & HIGHLIGHTS ─────────────────────── -->
+        <section id="projects" class="py-24 px-6">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-3">
+                    <p class="section-label sticky top-24">Projects &amp;<br>Highlights</p>
+                </div>
+                <div class="lg:col-span-9 space-y-4">
+
+                    <!-- Patent -->
+                    <div class="ghost-card rounded-lg p-6 reveal">
+                        <div class="flex items-start justify-between gap-4 flex-wrap">
+                            <div class="space-y-1.5">
+                                <p class="section-label text-[10px]">Registered Patent</p>
+                                <h3 class="text-zinc-100 font-semibold text-base">AR-NAVIS — Indoor Navigation for
+                                    Accessibility</h3>
+                                <p class="text-zinc-400 text-sm leading-relaxed max-w-lg">
+                                    Augmented Reality indoor navigation app designed for individuals with disabilities.
+                                    Registered under the Indonesian Ministry of Law &amp; Human Rights.
+                                </p>
+                            </div>
+                            <span
+                                class="font-mono text-[11px] text-zinc-500 whitespace-nowrap mt-1">EC002023129061</span>
+                        </div>
                     </div>
 
-                    <!-- Exp 2 (Combined Akuntplus) -->
-                    <div class="glass-card spotlight-card rounded-2xl p-6 sm:p-8 space-y-4 border-l-4 border-l-emerald-400">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-700/60 pb-4">
-                            <div>
-                                <h3 class="text-xl sm:text-2xl font-bold text-slate-100">Software Engineer</h3>
-                                <p class="text-emerald-400 font-medium">Akuntplus / Accounting & IT Solution Firm</p>
+                    <!-- Bangkit -->
+                    <div class="ghost-card rounded-lg p-6 reveal">
+                        <div class="flex items-start justify-between gap-4 flex-wrap">
+                            <div class="space-y-1.5">
+                                <p class="section-label text-[10px]">Certification Program</p>
+                                <h3 class="text-zinc-100 font-semibold text-base">Bangkit Academy — Cloud Computing Path
+                                </h3>
+                                <p class="text-zinc-400 text-sm leading-relaxed max-w-lg">
+                                    Program by Google, Gojek, Tokopedia &amp; Traveloka.
+                                    Deployed and managed enterprise-grade applications on Google Cloud Platform (GCP).
+                                </p>
                             </div>
-                            <div class="text-left sm:text-right text-xs font-mono text-emerald-400 font-semibold">
-                                <i class="fa-regular fa-calendar mr-1"></i> Aug 2025 – May 2026
-                            </div>
+                            <span class="font-mono text-[11px] text-zinc-500 whitespace-nowrap mt-1">GCP</span>
                         </div>
-
-                        <ul class="space-y-2.5 text-slate-300 text-sm sm:text-base leading-relaxed">
-                            <li class="flex items-start gap-3">
-                                <i class="fa-solid fa-angle-right text-emerald-400 mt-1.5 text-xs"></i>
-                                <span>Architected and developed HR Management Systems using Flutter and Golang for automated attendance & payroll.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i class="fa-solid fa-angle-right text-emerald-400 mt-1.5 text-xs"></i>
-                                <span>Built high-traffic production apps: AdolPOS (Android) and AdolESS (iOS/Android) using Clean Architecture.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i class="fa-solid fa-angle-right text-emerald-400 mt-1.5 text-xs"></i>
-                                <span>Engineered a Web-based Vendor Portal using Laravel & RESTful APIs to streamline procurement workflows.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i class="fa-solid fa-angle-right text-emerald-400 mt-1.5 text-xs"></i>
-                                <span>Continued backend optimization (Go) for CICO Maps and Face Recognition features, as well as production support & bug-fixing.</span>
-                            </li>
-                        </ul>
                     </div>
 
-                    <!-- Exp 3 -->
-                    <div class="glass-card spotlight-card rounded-2xl p-6 sm:p-8 space-y-4 border-l-4 border-l-sky-400">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-700/60 pb-4">
-                            <div>
-                                <h3 class="text-xl sm:text-2xl font-bold text-slate-100">Programming Lead</h3>
-                                <p class="text-sky-400 font-medium">Baskara Renewable Energy UNS</p>
+                    <!-- EnigmaCamp -->
+                    <div class="ghost-card rounded-lg p-6 reveal">
+                        <div class="flex items-start justify-between gap-4 flex-wrap">
+                            <div class="space-y-1.5">
+                                <p class="section-label text-[10px]">Intensive Program</p>
+                                <h3 class="text-zinc-100 font-semibold text-base">EnigmaCamp — Golang Backend Intensive
+                                </h3>
+                                <p class="text-zinc-400 text-sm leading-relaxed max-w-lg">
+                                    Specialized training in building scalable microservices and backend systems using
+                                    Golang (2025).
+                                </p>
                             </div>
-                            <div class="text-left sm:text-right text-xs font-mono text-sky-400 font-semibold">
-                                <i class="fa-regular fa-calendar mr-1"></i> Mar 2023 – Jul 2023
-                            </div>
+                            <span class="font-mono text-[11px] text-zinc-500 whitespace-nowrap mt-1">2025</span>
                         </div>
-
-                        <ul class="space-y-2.5 text-slate-300 text-sm sm:text-base leading-relaxed">
-                            <li class="flex items-start gap-3">
-                                <i class="fa-solid fa-angle-right text-sky-400 mt-1.5 text-xs"></i>
-                                <span>Led real-time IoT System development for smart-bike tracking using MySQL, Google Maps API, and Plotly.js data visualization.</span>
-                            </li>
-                        </ul>
                     </div>
 
-                    <!-- Exp 4 -->
-                    <div class="glass-card spotlight-card rounded-2xl p-6 sm:p-8 space-y-4 border-l-4 border-l-indigo-400">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-700/60 pb-4">
-                            <div>
-                                <h3 class="text-xl sm:text-2xl font-bold text-slate-100">Web Developer Intern</h3>
-                                <p class="text-indigo-400 font-medium">PT Solusi Bangun Indonesia Tbk (SBI)</p>
+                    <!-- Lecturer -->
+                    <div class="ghost-card rounded-lg p-6 reveal">
+                        <div class="flex items-start justify-between gap-4 flex-wrap">
+                            <div class="space-y-1.5">
+                                <p class="section-label text-[10px]">Teaching</p>
+                                <h3 class="text-zinc-100 font-semibold text-base">Assistant Lecturer — UNS</h3>
+                                <p class="text-zinc-400 text-sm leading-relaxed max-w-lg">
+                                    Mentored 70+ students in C++, Python, and MATLAB for Programming &amp; Numerical
+                                    Methods courses.
+                                    Achieved a <span class="text-emerald-400 font-medium">100% class passing
+                                        rate</span>.
+                                </p>
                             </div>
-                            <div class="text-left sm:text-right text-xs font-mono text-indigo-400 font-semibold">
-                                <i class="fa-regular fa-calendar mr-1"></i> Jan 2023 – Mar 2023
-                            </div>
+                            <span class="font-mono text-[11px] text-zinc-500 whitespace-nowrap mt-1">Aug 2022 – Jun
+                                2023</span>
                         </div>
+                    </div>
 
-                        <ul class="space-y-2.5 text-slate-300 text-sm sm:text-base leading-relaxed">
-                            <li class="flex items-start gap-3">
-                                <i class="fa-solid fa-angle-right text-indigo-400 mt-1.5 text-xs"></i>
-                                <span>Developed centralized CCTV monitoring web platform using PHP and HTML5/CSS3 with RTSP live feeds.</span>
-                            </li>
-                        </ul>
+                    <!-- Education -->
+                    <div class="ghost-card rounded-lg p-6 reveal" style="border-color:#2d2d2d">
+                        <div class="flex items-start justify-between gap-4 flex-wrap">
+                            <div class="space-y-1.5">
+                                <p class="section-label text-[10px]">Education</p>
+                                <h3 class="text-zinc-100 font-semibold text-base">Universitas Sebelas Maret (UNS)</h3>
+                                <p class="text-zinc-400 text-sm">Bachelor of Electrical Engineering · ICT Concentration
+                                </p>
+                                <p class="text-zinc-500 text-xs font-mono">Aug 2020 – Jul 2024</p>
+                            </div>
+                            <span class="font-mono text-lg font-black text-emerald-400 mt-1">3.81 <span
+                                    class="text-xs text-zinc-500">/ 4.00</span></span>
+                        </div>
                     </div>
 
                 </div>
             </div>
         </section>
 
+        <hr class="divider max-w-5xl mx-auto">
 
-        <!-- 4. PROJECTS & HIGHLIGHTS SECTION -->
-        <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800/80">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center sm:text-left space-y-2 mb-12">
-                    <span class="text-teal-400 font-mono text-sm tracking-wider uppercase font-semibold">// Achievements</span>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-100">Projects & Highlights</h2>
-                    <div class="w-16 h-1 bg-gradient-to-r from-teal-400 to-emerald-500 rounded-full mx-auto sm:mx-0"></div>
+        <!-- ─────────────────────── SKILLS ─────────────────────── -->
+        <section id="skills" class="py-24 px-6 reveal">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-3">
+                    <p class="section-label sticky top-24">Skills</p>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                    <!-- Highlight 1: Patent -->
-                    <div class="glass-card spotlight-card rounded-2xl p-6 space-y-4 border-teal-500/40">
-                        <div class="flex items-center justify-between">
-                            <div class="p-3 rounded-xl bg-teal-500/10 text-teal-400">
-                                <i class="fa-solid fa-award text-2xl"></i>
-                            </div>
-                            <span class="px-2.5 py-1 rounded bg-teal-500/10 text-teal-400 text-xs font-mono">EC002023129061</span>
+                <div class="lg:col-span-9 space-y-8">
+                    <div>
+                        <p class="text-xs text-zinc-600 font-mono mb-3 uppercase tracking-widest">Mobile & Frontend</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-pill" style="color:#34d399;border-color:#34d39940">Flutter</span>
+                            <span class="skill-pill" style="color:#34d399;border-color:#34d39940">Dart</span>
+                            <span class="skill-pill">JavaScript</span>
+                            <span class="skill-pill">HTML5 / CSS3</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-100">Patent Holder (AR-NAVIS)</h3>
-                        <p class="text-sm text-slate-300 leading-relaxed">
-                            Augmented Reality indoor navigation app for accessibility, dedicated to supporting individuals with disabilities.
-                        </p>
                     </div>
-
-                    <!-- Highlight 2: Bangkit Academy -->
-                    <div class="glass-card spotlight-card rounded-2xl p-6 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400">
-                                <i class="fa-solid fa-cloud text-2xl"></i>
-                            </div>
-                            <span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-xs font-mono">GCP</span>
+                    <div>
+                        <p class="text-xs text-zinc-600 font-mono mb-3 uppercase tracking-widest">Backend & Database</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-pill" style="color:#2dd4bf;border-color:#2dd4bf40">Go (Golang)</span>
+                            <span class="skill-pill">PHP (Laravel)</span>
+                            <span class="skill-pill">REST APIs</span>
+                            <span class="skill-pill">PostgreSQL</span>
+                            <span class="skill-pill">MySQL</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-100">Bangkit Academy</h3>
-                        <p class="text-sm text-slate-300 leading-relaxed">
-                            Cloud Computing Path by Google, Gojek, Tokopedia, & Traveloka. Focused on deploying enterprise applications on Google Cloud Platform (GCP).
-                        </p>
                     </div>
-
-                    <!-- Highlight 3: EnigmaCamp -->
-                    <div class="glass-card spotlight-card rounded-2xl p-6 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="p-3 rounded-xl bg-sky-500/10 text-sky-400">
-                                <i class="fa-solid fa-server text-2xl"></i>
-                            </div>
-                            <span class="px-2.5 py-1 rounded bg-sky-500/10 text-sky-400 text-xs font-mono">Golang</span>
+                    <div>
+                        <p class="text-xs text-zinc-600 font-mono mb-3 uppercase tracking-widest">Infrastructure & Tools
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-pill">GCP</span>
+                            <span class="skill-pill">Docker</span>
+                            <span class="skill-pill">Git</span>
+                            <span class="skill-pill">Clean Architecture</span>
+                            <span class="skill-pill">Agile</span>
+                            <span class="skill-pill">Odoo ERP</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-100">EnigmaCamp Intensive</h3>
-                        <p class="text-sm text-slate-300 leading-relaxed">
-                            Golang Backend Microservices Intensive program specialized in building scalable microservices and backend systems.
-                        </p>
-                    </div>
-
-                    <!-- Highlight 4: Assistant Lecturer -->
-                    <div class="glass-card spotlight-card rounded-2xl p-6 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="p-3 rounded-xl bg-indigo-500/10 text-indigo-400">
-                                <i class="fa-solid fa-user-graduate text-2xl"></i>
-                            </div>
-                            <span class="px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 text-xs font-mono">UNS</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-100">Assistant Lecturer (UNS)</h3>
-                        <p class="text-sm text-slate-300 leading-relaxed">
-                            Mentored 70+ students in C++, Python, and MATLAB for programming and numerical methods courses.
-                        </p>
-                    </div>
-
-                    <!-- Highlight 5: Education -->
-                    <div class="glass-card spotlight-card rounded-2xl p-6 space-y-4 md:col-span-2 border-emerald-500/30">
-                        <div class="flex items-center justify-between">
-                            <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400">
-                                <i class="fa-solid fa-graduation-cap text-2xl"></i>
-                            </div>
-                            <span class="px-3 py-1 rounded bg-emerald-500/20 text-emerald-400 font-mono font-bold text-sm">GPA: 3.81 / 4.00</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-100">Universitas Sebelas Maret (UNS)</h3>
-                        <p class="text-sm text-slate-300">
-                            Bachelor of Electrical Engineering
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-
-        <!-- 5. SKILLS SECTION -->
-        <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800/80 bg-slate-900/40">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center sm:text-left space-y-2 mb-12">
-                    <span class="text-teal-400 font-mono text-sm tracking-wider uppercase font-semibold">// Competencies</span>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-100">Skills</h2>
-                    <div class="w-16 h-1 bg-gradient-to-r from-teal-400 to-emerald-500 rounded-full mx-auto sm:mx-0"></div>
-                </div>
-
-                <div class="glass-card spotlight-card rounded-2xl p-6 sm:p-8">
-                    <div class="flex flex-wrap gap-3 justify-center sm:justify-start">
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-teal-400 font-mono text-sm font-semibold hover:border-teal-400 transition-colors">Flutter</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-teal-400 font-mono text-sm font-semibold hover:border-teal-400 transition-colors">Dart</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-emerald-400 font-mono text-sm font-semibold hover:border-emerald-400 transition-colors">Go</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-mono text-sm hover:border-teal-400 transition-colors">PHP (Laravel)</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-mono text-sm hover:border-teal-400 transition-colors">JavaScript</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-mono text-sm hover:border-teal-400 transition-colors">PostgreSQL</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-mono text-sm hover:border-teal-400 transition-colors">MySQL</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-sky-400 font-mono text-sm font-semibold hover:border-sky-400 transition-colors">REST APIs</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-mono text-sm hover:border-teal-400 transition-colors">Git</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-mono text-sm hover:border-teal-400 transition-colors">Docker</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-emerald-400 font-mono text-sm font-semibold hover:border-emerald-400 transition-colors">GCP</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-teal-400 font-mono text-sm font-semibold hover:border-teal-400 transition-colors">Clean Architecture</span>
-                        <span class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-mono text-sm hover:border-teal-400 transition-colors">Agile Development</span>
                     </div>
                 </div>
             </div>
         </section>
 
+        <hr class="divider max-w-5xl mx-auto">
 
-        <!-- 6. CONTACT & FOOTER SECTION -->
-        <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800/80">
-            <div class="max-w-4xl mx-auto text-center space-y-8">
-                <div class="space-y-3">
-                    <span class="text-teal-400 font-mono text-sm tracking-wider uppercase font-semibold">// Get In Touch</span>
-                    <h2 class="text-3xl sm:text-5xl font-extrabold text-slate-100">Contact Me</h2>
-                    <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
-                        Jakarta, Indonesia | Open for software & mobile engineering opportunities.
+        <!-- ─────────────────────── CONTACT ─────────────────────── -->
+        <section id="contact" class="py-24 px-6 reveal">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-3">
+                    <p class="section-label sticky top-24">Contact</p>
+                </div>
+                <div class="lg:col-span-9 space-y-6">
+                    <p class="text-zinc-400 text-[15px] leading-relaxed max-w-md">
+                        Open to new engineering roles, freelance work, or interesting conversations.
+                        Reach out directly — I respond promptly.
                     </p>
-                    <div class="w-16 h-1 bg-gradient-to-r from-teal-400 to-emerald-500 rounded-full mx-auto"></div>
-                </div>
-
-                <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
-                    <a href="mailto:najya.anastasya275@gmail.com" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-teal-400 to-emerald-500 text-slate-950 font-bold hover:shadow-lg hover:shadow-teal-500/25 hover:scale-[1.02] transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-envelope"></i>
-                        <span>najya.anastasya275@gmail.com</span>
-                    </a>
-                </div>
-
-                <div class="flex items-center justify-center space-x-6 pt-4 text-slate-400">
-                    <a href="https://www.linkedin.com/in/najya-anastasya/" target="_blank" rel="noopener noreferrer" class="hover:text-teal-400 text-2xl transition-colors" title="LinkedIn">
-                        <i class="fa-brands fa-linkedin"></i>
-                    </a>
-                    <a href="https://github.com/anastasyawlf" target="_blank" rel="noopener noreferrer" class="hover:text-teal-400 text-2xl transition-colors" title="GitHub">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
+                    <div class="space-y-3">
+                        <a href="mailto:najya.anastasya275@gmail.com" class="contact-link">
+                            <i class="fa-solid fa-envelope link-icon"></i>
+                            <span class="link-text font-mono text-sm text-zinc-400">najya.anastasya275@gmail.com</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/najya-anastasya/" target="_blank" rel="noopener noreferrer" class="contact-link">
+                            <i class="fa-brands fa-linkedin link-icon"></i>
+                            <span class="link-text font-mono text-sm text-zinc-400">linkedin.com/in/najya-anastasya</span>
+                        </a>
+                        <a href="https://github.com/anastasyawlf" target="_blank" rel="noopener noreferrer" class="contact-link">
+                            <i class="fa-brands fa-github link-icon"></i>
+                            <span class="link-text font-mono text-sm text-zinc-400">github.com/anastasyawlf</span>
+                        </a>
+                    </div>
+                    <div class="pt-2">
+                        <a href="mailto:najya.anastasya275@gmail.com" class="btn-solid">
+                            Send a message <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -567,100 +864,55 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-slate-950 py-8 px-4 text-center">
-        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
-            <p>© 2026 Najya Anastasya. All rights reserved.</p>
-            <p class="flex items-center gap-1.5">
-                <span>Built with HTML & Tailwind CSS</span>
-            </p>
+    <footer class="border-t border-zinc-800/60 px-6 py-8">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <span class="font-mono text-xs text-zinc-600">© 2026 Najya Anastasya</span>
+            <span class="font-mono text-xs text-zinc-700">Built with HTML · Tailwind CSS · No frameworks</span>
         </div>
     </footer>
 
-    <!-- Interactive Vanilla JS Script -->
+    <!-- ───── Scripts ───── -->
     <script>
-        // 1. Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        // ── Mobile nav ──
+        document.getElementById('mob-btn').addEventListener('click', () => {
+            document.getElementById('mob-menu').classList.toggle('hidden');
         });
+        document.querySelectorAll('#mob-menu a').forEach(a =>
+            a.addEventListener('click', () => document.getElementById('mob-menu').classList.add('hidden'))
+        );
 
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        // ── Cursor glow — desktop only ──
+        const isTouch = window.matchMedia('(pointer: coarse)').matches;
+        if (!isTouch) {
+            const glow = document.getElementById('cursor-glow');
+            let mx = 0, my = 0, cx = 0, cy = 0;
+            window.addEventListener('mousemove', e => {
+                mx = e.clientX; my = e.clientY;
+                glow.style.opacity = '1';
             });
-        });
-
-        // 2. Mouse Cursor Glowing Spotlight & Card Interactive Highlights
-        const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
-
-        if (!isTouchDevice) {
-            // Create Glowing Spotlight Orb in background
-            const spotlight = document.createElement('div');
-            spotlight.id = 'cursor-spotlight';
-            document.body.appendChild(spotlight);
-
-            let mouseX = 0, mouseY = 0;
-            let currentX = 0, currentY = 0;
-
-            window.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                spotlight.style.opacity = '1';
-            });
-
-            window.addEventListener('mouseleave', () => {
-                spotlight.style.opacity = '0';
-            });
-
-            // Smooth 60fps Interpolation Loop
-            function animateSpotlight() {
-                currentX += (mouseX - currentX) * 0.12;
-                currentY += (mouseY - currentY) * 0.12;
-                spotlight.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-                requestAnimationFrame(animateSpotlight);
-            }
-            animateSpotlight();
-
-            // Card Inner Radial Glow Tracking
-            document.querySelectorAll('.spotlight-card').forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    card.style.setProperty('--mouse-x', `${x}px`);
-                    card.style.setProperty('--mouse-y', `${y}px`);
-                });
-            });
+            window.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+            (function tick() {
+                cx += (mx - cx) * 0.1;
+                cy += (my - cy) * 0.1;
+                glow.style.transform = `translate3d(${cx}px,${cy}px,0)`;
+                requestAnimationFrame(tick);
+            })();
         }
 
-        // 3. Native Intersection Observer for Smooth Scroll Reveal Animations & Stagger
-        const revealObserver = new IntersectionObserver((entries, observer) => {
+        // ── Scroll reveal (Intersection Observer) ──
+        const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('visible');
+                obs.unobserve(entry.target);
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -40px 0px'
+        }, { threshold: 0.08, rootMargin: '0px 0px -36px 0px' });
+
+        document.querySelectorAll('.reveal').forEach((el, i) => {
+            el.style.transitionDelay = `${(i % 5) * 80}ms`;
+            observer.observe(el);
         });
-
-        // Auto-assign reveal classes & staggered delay offsets
-        document.querySelectorAll('section').forEach(section => {
-            const sectionTitles = section.querySelectorAll('.text-center, .sm\\:text-left');
-            sectionTitles.forEach(title => title.classList.add('reveal-on-scroll'));
-
-            const cards = section.querySelectorAll('.spotlight-card');
-            cards.forEach((card, index) => {
-                card.classList.add('reveal-on-scroll');
-                card.style.transitionDelay = `${(index % 4) * 120}ms`;
-            });
-        });
-
-        document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObserver.observe(el));
     </script>
 </body>
+
 </html>
